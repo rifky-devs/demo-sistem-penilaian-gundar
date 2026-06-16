@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Pengolahan Nilai Mahasiswa — Universitas Gunadarma</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg-gunadarma-light">
+    <section id="login" class="login min-vh-100 d-flex align-items-center py-5">
+      <div class="container">
+        <div class="row align-items-center justify-content-center g-5">
+          <!-- Branding / Hero Text -->
+          <div class="col-lg-6 text-white text-center text-lg-start animate-fade-in">
+            <div class="d-inline-flex align-items-center gap-3 mb-4 justify-content-center justify-content-lg-start">
+              <img
+                src="images/gunadarma.png"
+                alt="Logo Universitas Gunadarma"
+                class="logo-lg logo-hero rounded-4 shadow-sm"
+              />
+              <div class="text-start">
+                <h5 class="brand-text fw-bold mb-0 text-white tracking-wide">UNIVERSITAS</h5>
+                <small class="text-white-50 fw-semibold tracking-wider" style="font-size: 0.75rem">GUNADARMA</small>
+              </div>
+            </div>
+            <h1 class="display-5 fw-extrabold mb-3 lh-sm text-shadow">Sistem Pengolahan Nilai Mahasiswa</h1>
+            <p class="lead opacity-75 fs-5">
+              Aplikasi monitoring hasil studi terpadu dengan login role-based, manajemen data mahasiswa & dosen,
+              pengelolaan akun pengguna, serta kalkulasi nilai akhir otomatis sesuai standar Universitas Gunadarma.
+            </p>
+          </div>
+
+          <!-- Login Form Card -->
+          <div class="col-md-8 col-lg-5 col-xl-4">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden animate-slide-up">
+              <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                  <img class="mb-3 logo-md" src="images/gunadarma.png" alt="Logo Gunadarma" />
+                  <h4 class="fw-bold text-dark-purple mb-1">Login Sistem</h4>
+                  <p class="text-muted small">Silakan masuk untuk mengelola nilai</p>
+                </div>
+
+                <form
+                  onsubmit="
+                    loginUser(event);
+                    return false;
+                  "
+                >
+                  <div class="mb-3">
+                    <label for="username" class="form-label text-dark-purple fw-semibold small">Username</label>
+                    <input
+                      id="username"
+                      class="form-control rounded-3"
+                      placeholder="admin"
+                      required
+                      autocomplete="username"
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label for="password" class="form-label text-dark-purple fw-semibold small">Password</label>
+                    <input
+                      id="password"
+                      type="password"
+                      class="form-control rounded-3"
+                      placeholder="admin123"
+                      required
+                      autocomplete="current-password"
+                    />
+                  </div>
+
+                  <button type="submit" class="btn btn-purple btn-lg w-100 fw-bold rounded-3 py-2 text-white">
+                    Masuk
+                  </button>
+
+                  <div class="mt-4 pt-3 border-top border-light text-center">
+                    <span class="d-block text-muted small mb-2">Akun Demo Default:</span>
+                    <div class="bg-gunadarma-bg p-2 rounded-3 border border-purple-subtle">
+                      <div class="row g-1 text-center small text-secondary">
+                        <div class="col-12">
+                          <code class="text-dark-purple">admin</code> / <code class="text-dark-purple">admin123</code>
+                          <span class="badge bg-secondary-subtle text-secondary ms-1">Admin</span>
+                        </div>
+                        <div class="col-12">
+                          <code class="text-dark-purple">dosen</code> / <code class="text-dark-purple">dosen123</code>
+                          <span class="badge bg-secondary-subtle text-secondary ms-1">Dosen</span>
+                        </div>
+                        <div class="col-12">
+                          <code class="text-dark-purple">mahasiswa</code> /
+                          <code class="text-dark-purple">mahasiswa123</code>
+                          <span class="badge bg-secondary-subtle text-secondary ms-1">Mhs</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p id="error" class="msg text-danger text-center mt-3 small fw-bold"></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="app" class="app hide">
+      <!-- Sidebar -->
+      <aside class="sidebar d-flex flex-column p-3 text-white">
+        <div
+          class="sidebar-brand d-flex align-items-center gap-2 mb-4 pb-3 border-bottom border-white border-opacity-10"
+        >
+          <img src="images/gunadarma.png" alt="Logo Gunadarma" class="logo-sm rounded p-1 bg-white" />
+          <div class="brand-text-container">
+            <h6 class="fw-bold mb-0 text-white tracking-wide">UNIVERSITAS</h6>
+            <small class="text-white-50 fw-semibold tracking-wider" style="font-size: 0.72rem">GUNADARMA</small>
+          </div>
+        </div>
+
+        <ul class="nav nav-pills flex-column mb-auto gap-1">
+          <li class="nav-item">
+            <button id="menu-dashboard" class="nav-link w-100 text-start active" onclick="show('dashboard')">
+              <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </button>
+          </li>
+          <li class="nav-item admin" style="display: none">
+            <button id="menu-siswa" class="nav-link w-100 text-start" onclick="show('siswa')">
+              <i class="bi bi-people me-2"></i> Data Mahasiswa
+            </button>
+          </li>
+          <li class="nav-item admin" style="display: none">
+            <button id="menu-guru" class="nav-link w-100 text-start" onclick="show('guru')">
+              <i class="bi bi-person-badge me-2"></i> Data Dosen
+            </button>
+          </li>
+          <li class="nav-item admin" style="display: none">
+            <button id="menu-akun" class="nav-link w-100 text-start" onclick="show('akun')">
+              <i class="bi bi-shield-lock me-2"></i> Akun User
+            </button>
+          </li>
+          <li class="nav-item admin dosen" style="display: none">
+            <button id="menu-nilai" class="nav-link w-100 text-start" onclick="show('nilai')">
+              <i class="bi bi-journal-plus me-2"></i> Input Nilai
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="menu-laporan" class="nav-link w-100 text-start" onclick="show('laporan')">
+              <i class="bi bi-file-earmark-bar-graph me-2"></i> Laporan
+            </button>
+          </li>
+        </ul>
+
+        <div class="pt-3 border-top border-white border-opacity-10 mt-3">
+          <button
+            class="btn btn-outline-light-custom w-100 text-start d-flex align-items-center justify-content-between"
+            onclick="location.reload()"
+          >
+            <span><i class="bi bi-box-arrow-right me-2"></i> Keluar</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="content-area p-4">
+        <header
+          class="d-flex justify-content-between align-items-center gap-3 mb-4 pb-3 border-bottom border-purple-light"
+        >
+          <h2 id="title" class="fw-bold text-dark-purple mb-0">Dashboard</h2>
+          <div
+            id="userBox"
+            class="fw-bold text-purple bg-white py-2 px-3 rounded-3 shadow-sm border border-light-purple"
+          ></div>
+        </header>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page">
+          <div class="row g-4 mb-4">
+            <div class="col-md-4">
+              <div class="card border-0 shadow-sm rounded-4 stat-card card-mhs">
+                <div
+                  class="card-body p-4 d-flex align-items-center justify-content-between bg-white rounded-4 border-start border-4 border-purple"
+                >
+                  <div>
+                    <span class="text-muted fw-semibold small text-uppercase">Total Mahasiswa</span>
+                    <h2 id="totalSiswa" class="fw-bold mb-0 text-dark-purple mt-2">0</h2>
+                  </div>
+                  <div class="icon-shape bg-purple-subtle text-purple rounded-3 p-3">
+                    <i class="bi bi-people fs-3"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card border-0 shadow-sm rounded-4 stat-card card-dsn">
+                <div
+                  class="card-body p-4 d-flex align-items-center justify-content-between bg-white rounded-4 border-start border-4 border-purple"
+                >
+                  <div>
+                    <span class="text-muted fw-semibold small text-uppercase">Total Dosen</span>
+                    <h2 id="totalGuru" class="fw-bold mb-0 text-dark-purple mt-2">0</h2>
+                  </div>
+                  <div class="icon-shape bg-purple-subtle text-purple rounded-3 p-3">
+                    <i class="bi bi-person-badge fs-3"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card border-0 shadow-sm rounded-4 stat-card card-grd">
+                <div
+                  class="card-body p-4 d-flex align-items-center justify-content-between bg-white rounded-4 border-start border-4 border-purple"
+                >
+                  <div>
+                    <span class="text-muted fw-semibold small text-uppercase">Total Nilai</span>
+                    <h2 id="totalNilai" class="fw-bold mb-0 text-dark-purple mt-2">0</h2>
+                  </div>
+                  <div class="icon-shape bg-purple-subtle text-purple rounded-3 p-3">
+                    <i class="bi bi-journal-check fs-3"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="card border-0 shadow-sm rounded-4 bg-purple-light-subtle border-start border-4 border-purple mb-4"
+          >
+            <div class="card-body p-4">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-info-circle-fill text-purple fs-4 mt-1"></i>
+                <div>
+                  <h5 class="fw-bold text-dark-purple mb-1">Informasi Penilaian</h5>
+                  <p class="mb-0 text-muted">
+                    Rumus Nilai Akhir: <strong>30% Tugas + 30% UTS + 40% UAS</strong>. Mahasiswa dinyatakan
+                    <strong>Lulus</strong> jika Nilai Akhir minimal <strong>70</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mahasiswa Page -->
+        <div id="siswa" class="page hide">
+          <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark-purple mb-4"><i class="bi bi-plus-circle me-2"></i>Tambah Mahasiswa</h5>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="nis" class="form-label fw-semibold small text-muted">NPM</label>
+                  <input id="nis" class="form-control rounded-3" placeholder="Contoh: 51422442" />
+                </div>
+                <div class="col-md-4">
+                  <label for="namaSiswa" class="form-label fw-semibold small text-muted">Nama Mahasiswa</label>
+                  <input id="namaSiswa" class="form-control rounded-3" placeholder="Nama lengkap mahasiswa" />
+                </div>
+                <div class="col-md-4">
+                  <label for="kelas" class="form-label fw-semibold small text-muted">Kelas / Prodi</label>
+                  <select id="kelas" class="form-select rounded-3">
+                    <option value="">Pilih Kelas / Prodi</option>
+                    <option value="4IA26">4IA26</option>
+                    <option value="TI-3A">TI-3A</option>
+                    <option value="SI-3B">SI-3B</option>
+                    <option value="MI-2A">MI-2A</option>
+                  </select>
+                </div>
+                <div class="col-12 d-flex flex-wrap align-items-center justify-content-between gap-3 mt-4">
+                  <span class="small text-muted"
+                    ><i class="bi bi-info-circle me-1"></i> Username mahasiswa otomatis memakai NPM. Password default:
+                    <code>mahasiswa123</code></span
+                  >
+                  <button onclick="addStudent()" class="btn btn-purple px-4 rounded-3 fw-bold text-white">
+                    Tambah Mahasiswa
+                  </button>
+                </div>
+              </div>
+              <p id="msgSiswa" class="msg text-danger mt-3 small fw-bold"></p>
+            </div>
+          </div>
+          <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <div id="tableSiswa" class="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dosen Page -->
+        <div id="guru" class="page hide">
+          <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark-purple mb-4"><i class="bi bi-plus-circle me-2"></i>Tambah Dosen</h5>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="kode" class="form-label fw-semibold small text-muted">NIDN / ID Dosen</label>
+                  <input id="kode" class="form-control rounded-3" placeholder="Contoh: G001" />
+                </div>
+                <div class="col-md-4">
+                  <label for="namaGuru" class="form-label fw-semibold small text-muted">Nama Dosen</label>
+                  <input id="namaGuru" class="form-control rounded-3" placeholder="Nama lengkap dosen" />
+                </div>
+                <div class="col-md-4">
+                  <label for="mapel" class="form-label fw-semibold small text-muted">Mata Kuliah</label>
+                  <input id="mapel" class="form-control rounded-3" placeholder="Contoh: Pemrograman Web" />
+                </div>
+                <div class="col-12 d-flex flex-wrap align-items-center justify-content-between gap-3 mt-4">
+                  <span class="small text-muted"
+                    ><i class="bi bi-info-circle me-1"></i> Username dosen otomatis memakai NIDN huruf kecil. Password
+                    default: <code>dosen123</code></span
+                  >
+                  <button onclick="addTeacher()" class="btn btn-purple px-4 rounded-3 fw-bold text-white">
+                    Tambah Dosen
+                  </button>
+                </div>
+              </div>
+              <p id="msgGuru" class="msg text-danger mt-3 small fw-bold"></p>
+            </div>
+          </div>
+          <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <div id="tableGuru" class="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Akun Page -->
+        <div id="akun" class="page hide">
+          <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark-purple mb-4"><i class="bi bi-plus-circle me-2"></i>Tambah Akun Manual</h5>
+              <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                  <label for="akunNama" class="form-label fw-semibold small text-muted">Nama Pengguna</label>
+                  <input id="akunNama" class="form-control rounded-3" placeholder="Nama pengguna" />
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <label for="akunUsername" class="form-label fw-semibold small text-muted">Username</label>
+                  <input id="akunUsername" class="form-control rounded-3" placeholder="Username login" />
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <label for="akunPassword" class="form-label fw-semibold small text-muted">Password</label>
+                  <input id="akunPassword" class="form-control rounded-3" placeholder="Password" />
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <label for="akunRole" class="form-label fw-semibold small text-muted">Role</label>
+                  <select id="akunRole" class="form-select rounded-3">
+                    <option value="">Pilih Role</option>
+                    <option value="admin">admin</option>
+                    <option value="dosen">dosen</option>
+                    <option value="mahasiswa">mahasiswa</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="akunRef" class="form-label fw-semibold small text-muted">Reference ID</label>
+                  <input
+                    id="akunRef"
+                    class="form-control rounded-3"
+                    placeholder="ID mahasiswa/dosen terkait (opsional)"
+                  />
+                </div>
+                <div class="col-md-6 d-flex align-items-end justify-content-end mt-3">
+                  <button onclick="addAccount()" class="btn btn-purple px-4 rounded-3 fw-bold text-white">
+                    Tambah Akun
+                  </button>
+                </div>
+              </div>
+              <p id="msgAkun" class="msg text-danger mt-3 small fw-bold"></p>
+            </div>
+          </div>
+          <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <div id="tableAkun" class="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nilai Page -->
+        <div id="nilai" class="page hide">
+          <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <h5 class="fw-bold text-dark-purple mb-4"><i class="bi bi-plus-circle me-2"></i>Input Nilai Mahasiswa</h5>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="pilihSiswa" class="form-label fw-semibold small text-muted">Mahasiswa</label>
+                  <select id="pilihSiswa" class="form-select rounded-3"></select>
+                </div>
+                <div class="col-md-6">
+                  <label for="pilihGuru" class="form-label fw-semibold small text-muted">Dosen / Mata Kuliah</label>
+                  <select id="pilihGuru" class="form-select rounded-3"></select>
+                </div>
+                <div class="col-md-4">
+                  <label for="tugas" class="form-label fw-semibold small text-muted">Nilai Tugas (0–100)</label>
+                  <input
+                    id="tugas"
+                    type="number"
+                    min="0"
+                    max="100"
+                    class="form-control rounded-3"
+                    placeholder="0 – 100"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="uts" class="form-label fw-semibold small text-muted">Nilai UTS (0–100)</label>
+                  <input
+                    id="uts"
+                    type="number"
+                    min="0"
+                    max="100"
+                    class="form-control rounded-3"
+                    placeholder="0 – 100"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="uas" class="form-label fw-semibold small text-muted">Nilai UAS (0–100)</label>
+                  <input
+                    id="uas"
+                    type="number"
+                    min="0"
+                    max="100"
+                    class="form-control rounded-3"
+                    placeholder="0 – 100"
+                  />
+                </div>
+                <div class="col-12 d-flex flex-wrap align-items-center justify-content-between gap-3 mt-4">
+                  <span class="small text-muted"
+                    ><i class="bi bi-exclamation-triangle me-1"></i> Nilai Tugas, UTS, dan UAS hanya boleh antara 0
+                    sampai 100.</span
+                  >
+                  <button onclick="addGrade()" class="btn btn-purple px-4 rounded-3 fw-bold text-white">
+                    Simpan Nilai
+                  </button>
+                </div>
+              </div>
+              <p id="msgNilai" class="msg text-danger mt-3 small fw-bold"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Laporan Page -->
+        <div id="laporan" class="page hide">
+          <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+              <div id="tableNilai" class="table-responsive"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <!-- Modal Container (retains the standard IDs for Javascript compatibility) -->
+    <div id="modal" class="modal-backdrop-custom hide">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+          <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+            <h5 id="modalTitle" class="modal-title fw-bold text-dark-purple">Popup</h5>
+            <button type="button" class="btn-close" onclick="closeModal()" aria-label="Close"></button>
+          </div>
+          <div class="modal-body py-3 px-4">
+            <div id="modalBody"></div>
+            <p id="msgModal" class="msg text-danger small mt-2 fw-semibold"></p>
+          </div>
+          <div class="modal-footer border-top-0 pt-0 pb-4 px-4 justify-content-end gap-2">
+            <button class="btn btn-light px-4 rounded-3 fw-semibold text-muted" onclick="closeModal()">Kembali</button>
+            <button id="modalBtn" class="btn btn-purple px-4 rounded-3 fw-semibold text-white" onclick="submitModal()">
+              Lanjut
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Application Script -->
+    <script src="script.js"></script>
+  </body>
+</html>

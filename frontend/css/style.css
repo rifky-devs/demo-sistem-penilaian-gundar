@@ -1,0 +1,272 @@
+/* ==========================================================================
+   TEMA UNIVERSITAS GUNADARMA — Ungu halus, profesional, simple
+   ========================================================================== */
+
+:root {
+  --primary: #6D28D9;
+  --primary-dark: #4C1D95;
+  --primary-medium: #7C3AED;
+  --primary-soft: #A78BFA;
+  --primary-bg: #F5F3FF;
+  --white: #ffffff;
+  --text: #1E1B4B;
+  --text-muted: #6B7280;
+  --border: #E9E5FF;
+  --shadow: 0 4px 20px rgba(76, 29, 149, 0.05);
+}
+
+/* --- Base --- */
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: var(--text);
+  background-color: #FDFDFF;
+}
+
+.hide { display: none !important; }
+
+/* --- Warna & teks helper (Bootstrap) --- */
+.text-dark-purple { color: var(--primary-dark) !important; }
+.text-purple { color: var(--primary) !important; }
+.bg-gunadarma-light { background-color: #F9F8FF !important; }
+.bg-gunadarma-bg { background-color: var(--primary-bg) !important; }
+.bg-purple-light-subtle { background-color: var(--primary-bg) !important; }
+.bg-purple-subtle { background-color: rgba(109, 40, 217, 0.08) !important; }
+.border-purple-subtle { border-color: var(--border) !important; }
+.border-purple { border-color: var(--primary) !important; }
+.border-light-purple,
+.border-purple-light { border-color: #F0EDFF !important; }
+.text-shadow { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); }
+
+/* --- Logo Gunadarma --- */
+.logo-lg { width: 72px; height: 72px; object-fit: contain; }
+.logo-md { width: 70px; height: 70px; object-fit: contain; }
+.logo-sm { width: 40px; height: 40px; object-fit: contain; }
+.logo-hero {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px;
+}
+
+/* --- Button --- */
+.btn-purple {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+  transition: all 0.2s;
+}
+.btn-purple:hover,
+.btn-purple:focus,
+.btn-purple:active {
+  background-color: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  color: var(--white) !important;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25) !important;
+}
+
+.btn-outline-light-custom {
+  color: #DDD6FE;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: transparent;
+  transition: all 0.2s;
+}
+.btn-outline-light-custom:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.btn-action-edit {
+  border-color: var(--primary-soft);
+  color: var(--primary);
+  font-weight: 500;
+  padding: 4px 10px;
+}
+.btn-action-edit:hover {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.btn-action-del {
+  border-color: #FECACA;
+  color: #DC2626;
+  font-weight: 500;
+  padding: 4px 10px;
+}
+.btn-action-del:hover {
+  background-color: #DC2626;
+  color: white;
+  border-color: #DC2626;
+}
+
+/* --- Form --- */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-soft);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.18);
+  outline: 0;
+}
+
+/* --- Halaman Login --- */
+.login {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-medium) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Layout: Sidebar + Konten --- */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, var(--primary-dark) 0%, #321166 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebar .nav-link {
+  color: #D1C4E9;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  transition: all 0.2s;
+}
+.sidebar .nav-link:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+.sidebar .nav-link.active {
+  color: var(--white) !important;
+  background-color: var(--primary-medium) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+.content-area {
+  background-color: #F9F8FF;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* --- Card & Statistik Dashboard --- */
+.card {
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.stat-card {
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(109, 40, 217, 0.08);
+}
+
+.icon-shape {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Tabel Laporan --- */
+.table {
+  font-size: 0.92rem;
+  margin-bottom: 0;
+}
+.table th {
+  background-color: var(--primary-bg) !important;
+  color: var(--primary-dark) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  padding: 14px 16px;
+  border-bottom: 2px solid #E4E0FF !important;
+}
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #F0EDFF;
+}
+.table tr:hover td {
+  background-color: #FAF9FF !important;
+}
+
+/* Badge status kelulusan */
+.badge-lulus {
+  background-color: #D1FAE5 !important;
+  color: #047857 !important;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+.badge-tidak-lulus {
+  background-color: #FEE2E2 !important;
+  color: #DC2626 !important;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+/* --- Modal Edit/Hapus --- */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 27, 75, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.modal-backdrop-custom.hide { display: none !important; }
+.modal-backdrop-custom label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+.modal-backdrop-custom input,
+.modal-backdrop-custom select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+.modal-backdrop-custom input:focus,
+.modal-backdrop-custom select:focus {
+  border-color: var(--primary-soft);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.15);
+  outline: none;
+}
+
+/* --- Animasi ringan --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.animate-fade-in { animation: fadeIn 0.8s ease-out; }
+.animate-slide-up { animation: slideUp 0.6s ease both; }
+
+/* --- Responsive --- */
+@media (max-width: 991.98px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { height: auto; position: relative; }
+  .sidebar .nav { flex-direction: row !important; flex-wrap: wrap; gap: 6px; }
+  .sidebar .nav-link { text-align: center !important; font-size: 0.85rem; }
+  .content-area { height: auto; }
+}
